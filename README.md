@@ -4,12 +4,12 @@ This lua-app for Jeti transmitters is made for gps-based training of RC glider s
 All program releases in this 'V1'-repository are made to be compatible with generation 1 Jeti transmitters (with monochrome display). Please consider the requirements for those transmitters mentioned in the [**F3F-Tool manual**](docs/F3F-Tool%20Manual.md), so only use the binary form of the program (.lc) and do not use other lua-apps at the same time.
 
 ## Program Installation
-For installation of a stable release please download the zip-file and the corresponding manual of the newest release from the [**releases-page**](https://github.com/frank-sc/F3F-Test-V1/releases), download of the 'source code' packages is not necessary. Copy all files and directories into your 'apps' directory on the transmitter, as described in the manual. Then please follow the further steps in the manual.
+For installation of a stable release please download the zip-file and the corresponding manual of the newest release from the [**releases-page**](https://github.com/frank-sc/F3F-Tool-V1/releases), download of the 'source code' packages is not necessary. Copy all files and directories into your 'apps' directory on the transmitter, as described in the manual. Then please follow the further steps in the manual.
 
 For installation of the current development version (HEAD) please refer to the [**wiki**](https://github.com/frank-sc/F3F-Tool-V1/wiki)
 
 ## Status
-The tool in Version 1.4 is working quite well on the slope for F3F. For F3B-tasks there are some issues, especially with the very hight speed reached in the speed-task and with slightly inaccurate determination of the course bearing. See more detailed description in [**issues**](https://github.com/frank-sc/F3F-Test-V1/issues).
+The tool in Version 1.4 is working quite well on the slope for F3F. For F3B-tasks there are some issues, especially with the very hight speed reached in the speed-task and with slightly inaccurate determination of the course bearing. See more detailed description in [**issues**](https://github.com/frank-sc/F3F-Tool-V1/issues).
 
 ## Development notices
 The main program file 'f3f_\<version\> and the working directory 'f3fTool-\<version\> are always renamed for a new upcoming version. This is to make sure that everything fits together and to allow several versions to run independently on one transmitter.
@@ -19,7 +19,7 @@ Information about choosing a GPS-sensor and the Installation in the glider can b
 
 ## Project Support
 If you have great ideas to improve the performance of the F3F-Tool you are welcome to give me feedback, maybe here: 
-[**Discussions**](https://github.com/frank-sc/F3F-Test-V1/discussions)
+[**Discussions**](https://github.com/frank-sc/F3F-Tool-V1/discussions)
 
 If you like the tool you can also support my work on the the project by making a donation, i appreciate :)<br><br>
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.PayPal.Me/f3frank)<br>
