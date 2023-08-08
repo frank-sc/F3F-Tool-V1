@@ -1,0 +1,12 @@
+{
+    "audioStart":"F_Start.wav",
+    "audioSpeed":"/Voice/de/Geschwin.wav",
+    "audioCourse":"/Voice/en/Course.wav",
+    "audioTime":"/Voice/de/Zeit.wav",
+    "audioSeconds":"/Voice/de/Sekunden.wav",
+	"audioALeft":"/Apps/f3fTool-14/audio/de/a-links.wav",
+	"audioARight":"/Apps/f3fTool-14/audio/de/a-rechts.wav",
+	"audioCenter":"/Apps/f3fTool-14/audio/de/mitte.wav",
+	"audioF3bDistance":"F_Strecke.wav",
+	"audioF3bSpeed":"F_Speed.wav"
+}

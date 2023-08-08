@@ -1,0 +1,12 @@
+{
+    "audioStart":"en/F_Launch.wav",
+    "audioSpeed":"/Voice/en/Speed.wav",
+    "audioCourse":"/Voice/en/Course.wav",
+    "audioTime":"/Voice/en/Time.wav",
+    "audioSeconds":"/Voice/en/Seconds.wav",
+	"audioALeft":"/Apps/f3fTool-14/audio/en/a-left.wav",
+	"audioARight":"/Apps/f3fTool-14/audio/en/a-right.wav",
+	"audioCenter":"/Apps/f3fTool-14/audio/en/center.wav",	
+	"audioF3bDistance":"F_Distance.wav",
+	"audioF3bSpeed":"F_Speed.wav"
+}
