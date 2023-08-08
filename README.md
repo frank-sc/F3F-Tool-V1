@@ -18,13 +18,10 @@ The main program file 'f3f_\<version\> and the working directory 'f3fTool-\<vers
 Information about choosing a GPS-sensor and the Installation in the glider can be found in the [**wiki**](https://github.com/frank-sc/F3F-Tool-V1/wiki)
 
 ## Project Support
-If you have great ideas to improve the performance of the F3F-Tool you are welcome to give me feedback, maybe here: 
-[**Discussions**](https://github.com/frank-sc/F3F-Tool-V1/discussions)
-
-If you like the tool you can also support my work on the the project by making a donation, i appreciate :)<br><br>
+If you like the tool you can support my work on the the project by making a donation, i appreciate :)<br><br>
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.PayPal.Me/f3frank)<br>
 
 ### thanks to
 - Axel Barnitzke for giving me an idea how to work kind of object-oriented in LUA
-- Dave McQueeney for sharing his Sensor Emulator for Jeti Studio, which allowed me to do a lot of testing on the PC,<br>
+- Dave McQueeney for sharing his great Sensor Emulator for Jeti Studio, which allowed me to do a lot of testing on the PC,
 and also for bringing up the idea of unloading and reloading parts of code to meet the memory limitations
