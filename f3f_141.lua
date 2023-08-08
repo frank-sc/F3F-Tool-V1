@@ -79,9 +79,9 @@
 
 
 local appName = "F3F Tool"
-local appVersion = "1.4"
+local appVersion = "1.41"
 
-local dataDirRel = "f3fTool-14"         -- data dir (relative path)
+local dataDirRel = "f3fTool-141"        -- data dir (relative path)
 local dataDir = "Apps/" .. dataDirRel   -- data dir (abs. path)
 
 -- ===============================================================================================
