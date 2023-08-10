@@ -57,13 +57,13 @@ end
 -- determine index of a sensor in the sensor list
 
 function basicCfgForm:findIndexForSensor (sensorId, paramId)
-  local curIndex=-1
-  for index, sensor in ipairs(self.sensorList) do
+   local curIndex=-1
+   for index, sensor in ipairs(self.sensorList) do
       if(sensor.id==sensorId and sensor.param==paramId) then 
         curIndex=index
       end
-  end
-  return curIndex
+   end
+   return curIndex
 end
 
 --------------------------------------------------------------------------------------------
@@ -79,18 +79,18 @@ function basicCfgForm:initForm(formID)
    
   -- get reduced system sensor data from saved json-file
   -- direct use of 'system.getSensors()' needs too much memory
-    local file = io.readall(self.dataDir .. "/sensors.jsn")
-    if( file ) then
-      sysSensors = json.decode(file)
+  local file = io.readall(self.dataDir .. "/sensors.jsn")
+  if( file ) then
+     sysSensors = json.decode(file)
 	  
-	  -- convert id values back to number
-	  for i, sens in ipairs (sysSensors) do
+     -- convert id values back to number
+     for i, sens in ipairs (sysSensors) do
         sens.id = tonumber (sens.id)
-	  end
+     end
   
-    else
+   else
       self.handleErr ("could not read Sensor file")
-    end
+   end
 
    -- for use of Dave McQueeney's SensorEmulator with Jeti Studio:
    --   use 'getSensors' directly, doesn't work the other way 
@@ -106,14 +106,14 @@ function basicCfgForm:initForm(formID)
       descr = sensor.label
     else
       local unit = ""
-	  if (sensor.unit) then unit = "[" .. sensor.unit .. "]" end
+      if (sensor.unit) then unit = "[" .. sensor.unit .. "]" end
 
       list[#list+1]=string.format("%s - %s %s",descr,sensor.label, unit)   
       self.sensorList[#self.sensorList+1] = sensor
     end
   end
 
---  print(" basic cfg - lists: " .. collectgarbage("count") .. " kB");
+  --  print(" basic cfg - lists: " .. collectgarbage("count") .. " kB");
 
   --cleanup
   collectgarbage("collect") 
@@ -184,17 +184,17 @@ function basicCfgForm:closeForm ()
   
   value = form.getValue ( self.compSensorLat )
   if (value and value>0) then 
-     self.gpsSensor:setSensorValue ( self.gpsSensor.lat, self.sensorList[value])
+    self.gpsSensor:setSensorValue ( self.gpsSensor.lat, self.sensorList[value])
   end 
   
   value = form.getValue ( self.compSensorLon )
   if (value and value>0) then 
-     self.gpsSensor:setSensorValue ( self.gpsSensor.lon, self.sensorList[value])
+    self.gpsSensor:setSensorValue ( self.gpsSensor.lon, self.sensorList[value])
   end 
  
   value = form.getValue ( self.compSensorSpeed )
   if (value and value>0) then 
-     self.gpsSensor:setSensorValue ( self.gpsSensor.speed, self.sensorList[value])
+    self.gpsSensor:setSensorValue ( self.gpsSensor.speed, self.sensorList[value])
   end 
 end
 

@@ -83,29 +83,29 @@ function f3fRun:init ()
   self.nextTurnDir = self.globalVar.direction.UNDEF
   
   if self.slope.mode == 2 then                     -- F3B
-	self.halfDistance = self.basicCfg.f3bDistance / 2
+    self.halfDistance = self.basicCfg.f3bDistance / 2
 	
-	if ( self.basicCfg.f3bMode == 1 ) then             -- speed
+    if ( self.basicCfg.f3bMode == 1 ) then             -- speed
       self.countdownTime = 60
-	elseif ( self.basicCfg.f3bMode == 2 ) then         -- distance
+    elseif ( self.basicCfg.f3bMode == 2 ) then         -- distance
       self.countdownTime = 0
-	end
+    end
 	
   else                                             -- F3F
     self.countdownTime = 30   
-	self.halfDistance = self.basicCfg.f3fDistance / 2
+    self.halfDistance = self.basicCfg.f3fDistance / 2
   end
 end
 
 --------------------------------------------------------------------------------------------
 function f3fRun:setNextTurnDir ()
 
-   -- set side of next turn
-   if ( self.curDir == self.globalVar.direction.LEFT ) then
-      self.nextTurnDir = self.globalVar.direction.RIGHT
-   elseif ( f3fRun.curDir == self.globalVar.direction.RIGHT ) then
-      self.nextTurnDir = self.globalVar.direction.LEFT
-   end
+  -- set side of next turn
+  if ( self.curDir == self.globalVar.direction.LEFT ) then
+    self.nextTurnDir = self.globalVar.direction.RIGHT
+  elseif ( f3fRun.curDir == self.globalVar.direction.RIGHT ) then
+    self.nextTurnDir = self.globalVar.direction.LEFT
+  end
 end
 
 --------------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ function f3fRun:launch ()
   if ( self.globalVar.errorStatus == 4 ) then
      -- cancel - beep
      system.playBeep (2, 1000, 200)
-	 return
+     return
   end
   
   -- check, if sensors are active
@@ -126,11 +126,11 @@ function f3fRun:launch ()
   if ( self.globalVar.errorStatus ~= 0 ) then
      -- cancel - beep
      system.playBeep (2, 1000, 200)
-	 return
+     return
   end
   
   -- start launch phase
---  self.curStatus = self.status.STARTPHASE
+  --  self.curStatus = self.status.STARTPHASE
   self.curStatus = 3
   self.rounds = 0
 
@@ -153,16 +153,16 @@ function f3fRun:startRun ( timeout )
   
   -- in F3B-Distance mode go directly on hold and just count legs
   if ((self.slope.mode == 2) and (self.basicCfg.f3bMode == 2)) then
---     self.curStatus = self.status.ON_HOLD
+  --     self.curStatus = self.status.ON_HOLD
      self.curStatus = 2
   
   -- timeout - late entry ocurred   
   elseif (timeout) then
---     self.curStatus = self.status.TIMEOUT
+  --     self.curStatus = self.status.TIMEOUT
      self.curStatus = 4
   else
   -- regular f3f-start 
---     self.curStatus = self.status.F3F_RUN
+  --     self.curStatus = self.status.F3F_RUN
      self.curStatus = 5
   end
   
@@ -170,10 +170,10 @@ function f3fRun:startRun ( timeout )
   system.playFile (self.globalVar.resource.audioCourse, AUDIO_QUEUE)
   
   -- start timer for speed measurement after 1,5 sec.
---   if ( self.curSpeed and self.curStatus == self.status.F3F_RUN) then
-   if ( self.curSpeed and self.curStatus == 5) then
-      self.timerStartSpeed = system.getTimeCounter()
-   end
+  --   if ( self.curSpeed and self.curStatus == self.status.F3F_RUN) then
+  if ( self.curSpeed and self.curStatus == 5) then
+     self.timerStartSpeed = system.getTimeCounter()
+  end
 end
 
 --------------------------------------------------------------------------------------------
@@ -182,21 +182,21 @@ end
 function f3fRun:distanceDone ()
 
 -- if we are not in a valid f3f-run - just beep to practise
---   if (self.curStatus ~= self.status.F3F_RUN) then
+   -- if (self.curStatus ~= self.status.F3F_RUN) then
    if (self.curStatus ~= 5) then
-	  system.playBeep (0, 700, 300)  
+     system.playBeep (0, 700, 300)  
    end
    
    -- in F3B-mode: count more rounds after 4 rounds (status 2: ON_HOLD)
    if ( (self.slope.mode == 2) and ( self.curStatus == 2)) then
-      self.rounds = self.rounds+1
+     self.rounds = self.rounds+1
    end
 
    local maxRounds
    if ( self.slope.mode == 1 ) then
-      maxRounds = 10              -- F3F mode
+     maxRounds = 10              -- F3F mode
    elseif ( self.slope.mode == 2 ) then
-      maxRounds = 4               -- F3B mode
+     maxRounds = 4               -- F3B mode
    end
    
    -- are we in f3f-run ?
@@ -210,9 +210,9 @@ function f3fRun:distanceDone ()
       if (self.rounds <= maxRounds-2 ) then
         system.playBeep  (0, 700, 300)  
       elseif (self.rounds == maxRounds-1 ) then
-         system.playBeep  (1, 700, 300)	   
+        system.playBeep  (1, 700, 300)	   
       else	  
-         system.playBeep  (2, 850, 200)
+        system.playBeep  (2, 850, 200)
       end
 
       -- from leg 8 make an announcement
@@ -223,14 +223,14 @@ function f3fRun:distanceDone ()
       -- all legs done - get flight time, change status
       if ( self.rounds >= maxRounds ) then
   	     local endTime = system.getTimeCounter()
-	     self.flightTime = endTime-self.f3fStartTime
+        self.flightTime = endTime-self.f3fStartTime
 		  
-	     system.playFile (self.globalVar.resource.audioTime, AUDIO_QUEUE)
-	     system.playNumber (self.flightTime / 1000, 1)
-	     system.playFile (self.globalVar.resource.audioSeconds, AUDIO_QUEUE)
+        system.playFile (self.globalVar.resource.audioTime, AUDIO_QUEUE)
+        system.playNumber (self.flightTime / 1000, 1)
+        system.playFile (self.globalVar.resource.audioSeconds, AUDIO_QUEUE)
 		   
---       self.curStatus = self.status.ON_HOLD
-         self.curStatus = 2
+--      self.curStatus = self.status.ON_HOLD
+        self.curStatus = 2
       end
    end
    
@@ -253,28 +253,28 @@ function f3fRun:countdown ()
   local curTime = system.getTimeCounter()     
   self.remainingCountdown = math.floor (self.countdownTime - (curTime-self.launchTime)/1000)
 
-    if (self.remainingCountdown ~= prevValue) then
+  if (self.remainingCountdown ~= prevValue) then
 
-        -- Announcement
-        if ( (self.remainingCountdown >= 30 and self.remainingCountdown % 10 == 0) or 
-             (self.remainingCountdown  < 30 and self.remainingCountdown %  5 == 0) or 
-		     (self.remainingCountdown <= 10) )  then
+     -- Announcement
+     if ( (self.remainingCountdown >= 30 and self.remainingCountdown % 10 == 0) or 
+          (self.remainingCountdown  < 30 and self.remainingCountdown %  5 == 0) or 
+          (self.remainingCountdown <= 10) )  then
 		
-	        system.playNumber (self.remainingCountdown, 0)
-	    end
-    end  
+        system.playNumber (self.remainingCountdown, 0)
+     end
+  end  
     
-    -- Timeout: start F3F run / cancel F3B run 
-    if ( self.remainingCountdown == 0 ) then
+  -- Timeout: start F3F run / cancel F3B run 
+  if ( self.remainingCountdown == 0 ) then
 	   
-	   if ( self.slope.mode == 1 ) then        -- F3F
-         self:startRun ( true ) 
-	   elseif ( self.slope.mode == 2 ) then    -- F3B
-         system.playBeep (2, 500, 400)  
-		 self:init ()
-	   end	 
-	end
+     if ( self.slope.mode == 1 ) then        -- F3F
+        self:startRun ( true ) 
+     elseif ( self.slope.mode == 2 ) then    -- F3B
+        system.playBeep (2, 500, 400)  
+        self:init ()
+     end	 
   end
+end
 
 --------------------------------------------------------------------------------------------
 -- update current position, distance and bearing data
@@ -292,23 +292,23 @@ function f3fRun:updatePositionData ( point )
   ------ calc current flight angle to slope
   if ( self.slope.gpsHome and self.slope.bearing ) then 
      
-	 -- current flight angle from north
+     -- current flight angle from north
      self.curBearing = gps.getBearing (self.slope.gpsHome, self.curPosition)
 
      -- current flight angle to slope
      self.curBearing = self.slope.bearing - self.curBearing
-	 if (self.curBearing < 0) then 
-	    self.curBearing = self.curBearing + 360
-	 end
+     if (self.curBearing < 0) then 
+        self.curBearing = self.curBearing + 360
+     end
 	 
-	-- determine, on which side of home position the model is located
-	-- curBearing always meant clockwise from flight line to slope
+     -- determine, on which side of home position the model is located
+     -- curBearing always meant clockwise from flight line to slope
 	 
-    if (self.curBearing <= 90 or self.curBearing > 270) then     -- 0-90 deg, 270-360 deg
-	   self.curDir = self.globalVar.direction.RIGHT
-    else                             
-	   self.curDir = self.globalVar.direction.LEFT                -- 90-270 deg
-    end
+     if (self.curBearing <= 90 or self.curBearing > 270) then     -- 0-90 deg, 270-360 deg
+        self.curDir = self.globalVar.direction.RIGHT
+     else                             
+        self.curDir = self.globalVar.direction.LEFT                -- 90-270 deg
+     end
 
   end
 end
@@ -320,20 +320,19 @@ end
 function f3fRun:updateSpeedAndOptimizationData ( speed )
 
   self.curSpeed = speed
-
   if ( self.curSpeed ) then
   
-	  -- offset determination
-	  -- for memory optimization we don't use configurable parameters but calculate it here absolutely
+     -- offset determination
+     -- for memory optimization we don't use configurable parameters but calculate it here absolutely
 
---      self.f3fRunData.offset = (self.curSpeed / (150/self.maxOffset))  * (self.basicCfg.speedFaktorF3F / self.basicCfg.maxSpeedFaktor)
---      self.launchPhaseData.offset = (-1) * (((self.curSpeed / (150/self.maxOffset))  * (self.basicCfg.speedFaktorLaunchPhase / self.basicCfg.maxSpeedFaktor)) + self.basicCfg.statOffsetLaunchPhase)
+     -- self.f3fRunData.offset = (self.curSpeed / (150/self.maxOffset))  * (self.basicCfg.speedFaktorF3F / self.basicCfg.maxSpeedFaktor)
+     -- self.launchPhaseData.offset = (-1) * (((self.curSpeed / (150/self.maxOffset))  * (self.basicCfg.speedFaktorLaunchPhase / self.basicCfg.maxSpeedFaktor)) + self.basicCfg.statOffsetLaunchPhase)
 
---  1/(150/25)  * (65 / 100) = 0.65/6 
--- stat. Offset bei Start: 8
+     --  1/(150/25)  * (65 / 100) = 0.65/6 
+     -- stat. Offset bei Start: 8
 
-	  self.f3fRunData.offset = self.curSpeed * 0.65/6
-	  -- *(-1): in launch phase the offset works in the opposite direction to optimize the first fly in
+     self.f3fRunData.offset = self.curSpeed * 0.65/6
+     -- *(-1): in launch phase the offset works in the opposite direction to optimize the first fly in
      --        also add a static offset, this brought better results in flying tests, can't explain why
      self.launchPhaseData.offset =  (-1) * ((self.curSpeed * 0.65/6) + 8)
   end
@@ -346,11 +345,11 @@ end
 function f3fRun:checkFlyOut ( trackData )
 
   if ( trackData.insideFlag and 
-       (self.curDist + trackData.offset) * math.abs ( math.cos (math.rad ( self.curBearing )))
-        > self.halfDistance) then
+     (self.curDist + trackData.offset) * math.abs ( math.cos (math.rad ( self.curBearing )))
+      > self.halfDistance) then
   
-    trackData.insideFlag = false  
-    return true
+     trackData.insideFlag = false  
+     return true
   end
   
   return false  
@@ -363,11 +362,11 @@ end
 function f3fRun:checkFlyIn ( trackData )
 
   if ( not trackData.insideFlag and 
-       (self.curDist + trackData.offset) * math.abs ( math.cos (math.rad ( self.curBearing ))) 
-        < self.halfDistance) then
+     (self.curDist + trackData.offset) * math.abs ( math.cos (math.rad ( self.curBearing ))) 
+      < self.halfDistance) then
   
-    trackData.insideFlag = true 
-    return true
+     trackData.insideFlag = true 
+     return true
   end
   
   return false  

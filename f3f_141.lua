@@ -133,15 +133,15 @@ local function setLanguage()
   
    local file = io.readall(dataDir .. "/audio-" ..globalVar.lng.. ".jsn")
    if (not file) then
-	  print ("language: '" .. globalVar.lng .. "' not supported")
+      print ("language: '" .. globalVar.lng .. "' not supported")
       globalVar.lng = 'en'
       file = io.readall(dataDir .. "/audio-" ..globalVar.lng.. ".jsn")
    end   
 
    if( file ) then
-     globalVar.resource = json.decode(file)
+      globalVar.resource = json.decode(file)
    else
-     handleError ("audio config file not found")
+      handleError ("audio config file not found")
    end
 end
 
@@ -150,14 +150,14 @@ local function writeToFile (dir, file, data)
   local fSpec = dir.."/"..file
   local f = io.open ( fSpec, "w" )
 	   
-	if ( not f ) then		  
+  if ( not f ) then		  
       io.mkdir (dir)
       f = io.open ( fSpec, "w" )
     
       if ( not f) then
         handleError ("error writing file: " .. fSpec)
       end
-	end
+  end
 	
   if ( f ) then
     io.write(f, data, "\n")
@@ -262,13 +262,13 @@ function gpsSensor:getCurPosition ()
   else
      -- GPS not configured
      globalVar.errorStatus = 1
-	 return nil
+     return nil
   end 
 
   -- check if GPS is active
   if ( not curPosition ) then
- 	 globalVar.errorStatus = 2
-	 return nil
+     globalVar.errorStatus = 2
+     return nil
   end
 
   -- check if GPS is ready
@@ -295,7 +295,7 @@ function gpsSensor:getCurSpeed ()
 
      -- we need km/h
      if ( sensorData.unit == "m/s" ) then
-	    sensorvalue = sensorvalue * 3.6
+       sensorvalue = sensorvalue * 3.6
      end
 		
      return sensorvalue
@@ -429,33 +429,33 @@ function transmitter:observeSwitch ()
   local released = sVal and sVal<=0
 
   if (self.switchState == 0 and pressed) then            -- status 0: idle
-	   self.switchState = 1
-	   self.timerStartSwitch = system.getTimeCounter()        -- wait for long click
+     self.switchState = 1
+     self.timerStartSwitch = system.getTimeCounter()     -- wait for long click
 
   elseif (self.switchState == 1 and pressed) then        --  status 1: first pressed
-       -- check timer: long click if expired
-	   if ( (system.getTimeCounter() - self.timerStartSwitch) > 2000 ) then
-         self.switchState = 3
-		 return 3  -- long click
-	   end
+     -- check timer: long click if expired
+     if ( (system.getTimeCounter() - self.timerStartSwitch) > 2000 ) then
+       self.switchState = 3
+       return 3  -- long click
+     end
  
   elseif (self.switchState == 1 and released) then       --  status 1: first pressed
-	   self.switchState = 2
-	   self.timerStartSwitch = system.getTimeCounter()   -- wait for double click
+     self.switchState = 2
+     self.timerStartSwitch = system.getTimeCounter()     -- wait for double click
 
   elseif (self.switchState == 2 and released) then       -- status 2: first released
-      -- check timer: single click if expired
-	   if ( (system.getTimeCounter() - self.timerStartSwitch) > 250 ) then
-         self.switchState = 0
-		 return 1  -- single click
-	   end
+     -- check timer: single click if expired
+     if ( (system.getTimeCounter() - self.timerStartSwitch) > 250 ) then
+        self.switchState = 0
+     return 1  -- single click
+     end
 
   elseif (self.switchState == 2 and pressed) then   
-       self.switchState = 3
-	   return 2  -- double click
+     self.switchState = 3
+     return 2  -- double click
 
   elseif (self.switchState == 3 and released) then       -- status 3: second pressed
-         self.switchState = 0
+     self.switchState = 0
   end
 
   return 0
@@ -471,11 +471,11 @@ function transmitter:observeCenterShift ()
 
   if ( sVal and sVal > 0.3 and self.curCenterShiftState == 0 ) then
     self.curCenterShiftState = 1
-	return globalVar.direction.RIGHT -- adjust to right
+    return globalVar.direction.RIGHT -- adjust to right
 	
   elseif ( sVal and sVal < -0.3 and self.curCenterShiftState == 0 ) then
     self.curCenterShiftState = -1
-	return globalVar.direction.LEFT  -- adjust to left
+    return globalVar.direction.LEFT  -- adjust to left
 
   elseif ( sVal and sVal > -0.3 and sVal < 0.3 and self.curCenterShiftState ~= 0 ) then
     self.curCenterShiftState = 0
@@ -500,57 +500,57 @@ slope = {
 }
 
 --------------------------------------------------------------------------------------------
-  function slope:init ()
-    local file = io.readall(dataDir .. "/slopeData.jsn")
-    if ( file ) then
-	  local slopeData = json.decode(file)
+function slope:init ()
+  local file = io.readall(dataDir .. "/slopeData.jsn")
+  if ( file ) then
+    local slopeData = json.decode(file)
 
-	  self.gpsHome = gps.newPoint ( slopeData.homeLat, slopeData.homeLon ) 
-	  if (slopeData.aBase) then self.aBase = slopeData.aBase end 
-      if (slopeData.bearing) then self.bearing = slopeData.bearing end
-      if (slopeData.mode) then self.mode = slopeData.mode end
+    self.gpsHome = gps.newPoint ( slopeData.homeLat, slopeData.homeLon ) 
+    if (slopeData.aBase) then self.aBase = slopeData.aBase end 
+    if (slopeData.bearing) then self.bearing = slopeData.bearing end
+    if (slopeData.mode) then self.mode = slopeData.mode end
 	  
-      -- name - may be set by Database - App
-      if (slopeData.name) then 
-	     self.name = slopeData.name
-      else 
-		 self.name = ""
-	  end	  
+    -- name - may be set by Database - App
+    if (slopeData.name) then 
+      self.name = slopeData.name
+    else 
+      self.name = ""
+    end	  
 
-	end
   end
+end
 
 --------------------------------------------------------------------------------------------
-  function slope:jsonData ()
-    local latHome, lonHome = gps.getValue ( self.gpsHome )
-    return {homeLat=latHome, homeLon=lonHome, bearing=self.bearing,
-        	aBase = self.aBase, mode = self.mode, name = self.name}
-  end
+function slope:jsonData ()
+  local latHome, lonHome = gps.getValue ( self.gpsHome )
+  return {homeLat=latHome, homeLon=lonHome, bearing=self.bearing,
+          aBase = self.aBase, mode = self.mode, name = self.name}
+end
   
 --------------------------------------------------------------------------------------------
-  function slope:isDefined () return ( self.gpsHome and self.bearing ) end
+function slope:isDefined () return ( self.gpsHome and self.bearing ) end
 
 --------------------------------------------------------------------------------------------
-  function slope:persist ()
-   if ( self:isDefined () ) then
-   	 --- save slope-data in JSON independently from model storage
-	   local jsonStr = json.encode ( self:jsonData () )
-	   writeToFile (dataDir, "slopeData.jsn", jsonStr )   
-   end    
-  end
+function slope:persist ()
+  if ( self:isDefined () ) then
+    --- save slope-data in JSON independently from model storage
+    local jsonStr = json.encode ( self:jsonData () )
+    writeToFile (dataDir, "slopeData.jsn", jsonStr )   
+  end    
+end
 
 --------------------------------------------------------------------------------------------
-  function slope:toggleABase ()
-    if ( self.aBase == globalVar.direction.LEFT ) then 
-	  self.aBase = globalVar.direction.RIGHT 
-      system.playFile(globalVar.resource.audioARight, AUDIO_QUEUE)
-    else
-	  self.aBase = globalVar.direction.LEFT
-      system.playFile(globalVar.resource.audioALeft, AUDIO_QUEUE)
-	end
-
-    self:persist ()	
+function slope:toggleABase ()
+  if ( self.aBase == globalVar.direction.LEFT ) then 
+    self.aBase = globalVar.direction.RIGHT 
+    system.playFile(globalVar.resource.audioARight, AUDIO_QUEUE)
+  else
+    self.aBase = globalVar.direction.LEFT
+    system.playFile(globalVar.resource.audioALeft, AUDIO_QUEUE)
   end
+
+  self:persist ()	
+end
 
 --------------------------------------------------------------------------------------------
 -- definition of new center point (home)
@@ -588,7 +588,7 @@ function slope:moveCenter ( dir )
 
    local bear = self.bearing
    if ( dir == globalVar.direction.LEFT ) then 
-     -- adjustment to left: use reverse bearing 
+      -- adjustment to left: use reverse bearing 
       bear = (bear + 180) % 360
       system.playBeep (1, 600, 100)
    else
@@ -669,15 +669,15 @@ local display = {}
 
 --------------------------------------------------------------------------------------------
 function display:setColor()
-	local r, g, b = lcd.getBgColor()
+   local r, g, b = lcd.getBgColor()
 
-    -- use left or white letters depending from backgrond
-	if ((r + g + b) / 3 < 128) then
-		r, g, b = 255, 255, 255
-	else
-		r, g, b = 0, 0, 0
-	end
-	lcd.setColor(r, g, b)
+   -- use left or white letters depending from backgrond
+   if ((r + g + b) / 3 < 128) then
+     r, g, b = 255, 255, 255
+   else
+     r, g, b = 0, 0, 0
+   end
+   lcd.setColor(r, g, b)
 end
 
 --------------------------------------------------------------------------------------------
@@ -686,7 +686,7 @@ end
 
 function display:showInsideStatus ( inside_status )
 
---   if ( f3fRun.curDir == globalVar.direction.UNDEF ) then return end
+   --   if ( f3fRun.curDir == globalVar.direction.UNDEF ) then return end
 
    -- skip in F3B mode
    if ( slope.mode == 2) then return end
@@ -721,34 +721,34 @@ function display:showDistanceToStart ()
    -- skip in F3B mode
    if ( slope.mode == 2) then return end
 
-  if ( f3fRun.curDist ) then
-    local text = ""
-	if ( f3fRun.curDist > 1000 ) then  
-	   text = ">1000"
-	else
-       text = string.format("%.1f", f3fRun.curDist)
-	end
-    lcd.drawText(132 - lcd.getTextWidth(FONT_BOLD,text),35, text, FONT_BOLD)  
-    lcd.drawText(135,40, "m", FONT_MINI)  
-    lcd.drawText(106,53, "to Start", FONT_MINI)  
-  end
+   if ( f3fRun.curDist ) then
+     local text = ""
+   if ( f3fRun.curDist > 1000 ) then  
+     text = ">1000"
+   else
+     text = string.format("%.1f", f3fRun.curDist)
+   end
+     lcd.drawText(132 - lcd.getTextWidth(FONT_BOLD,text),35, text, FONT_BOLD)  
+     lcd.drawText(135,40, "m", FONT_MINI)  
+     lcd.drawText(106,53, "to Start", FONT_MINI)  
+   end
 end
 
 --------------------------------------------------------------------------------------------
 
 function display:printLegCount ()
 
-    -- show legs (rounds)
-    if(f3fRun.rounds) then
-      lcd.drawText(10,5, "Legs:", FONT_BOLD)
-      local text = string.format("%.0f", f3fRun.rounds)
-      lcd.drawText(80 - lcd.getTextWidth(FONT_MAXI,text), 23, text, FONT_MAXI)
-    end
+  -- show legs (rounds)
+  if(f3fRun.rounds) then
+    lcd.drawText(10,5, "Legs:", FONT_BOLD)
+    local text = string.format("%.0f", f3fRun.rounds)
+    lcd.drawText(80 - lcd.getTextWidth(FONT_MAXI,text), 23, text, FONT_MAXI)
+  end
 
-    -- and a little time display	
-	 local curFlightTime = system.getTimeCounter() - f3fRun.f3fStartTime
-     local text = string.format("%.0f%s",curFlightTime / 1000,"")
-     lcd.drawText(120,45,text,FONT_BOLD)  
+  -- and a little time display	
+  local curFlightTime = system.getTimeCounter() - f3fRun.f3fStartTime
+  local text = string.format("%.0f%s",curFlightTime / 1000,"")
+  lcd.drawText(120,45,text,FONT_BOLD)  
 end
 
 --------------------------------------------------------------------------------------------
@@ -756,17 +756,17 @@ end
 function display:printSpeedInfo ()
 
 --  if ( f3fRun:isStatus (f3fRun.status.F3F_RUN) or
---         f3fRun:isStatus (f3fRun.status.TIMEOUT) ) then
+--       f3fRun:isStatus (f3fRun.status.TIMEOUT) ) then
    if ( f3fRun.curStatus == 5 or
         f3fRun.curStatus == 4 ) then
      
-	 self.printLegCount ()
+     self.printLegCount ()
 	 
 --	 if ( f3fRun:isStatus (f3fRun.status.F3F_RUN) ) then
-	 if ( f3fRun.curStatus == 5 ) then
-		self:showInsideStatus(f3fRun.f3fRunData.insideFlag)
+     if ( f3fRun.curStatus == 5 ) then
+       self:showInsideStatus(f3fRun.f3fRunData.insideFlag)
      else  -- Timeout-Status, flag for launch phase still relevant
-		self:showInsideStatus(f3fRun.launchPhaseData.insideFlag)
+       self:showInsideStatus(f3fRun.launchPhaseData.insideFlag)
      end	 
 
     -- a little time display	
@@ -775,7 +775,7 @@ function display:printSpeedInfo ()
 --    lcd.drawText(120,45,text,FONT_BOLD)  
 
   -- after the run: show flight time and course info
-  else     
+   else     
      -- flight time  
      lcd.drawText(10,5, "Time:", FONT_BOLD)
      local text = string.format("%.2f%s",f3fRun.flightTime / 1000,"")
@@ -800,13 +800,13 @@ function display:printFlightInfo (width, height)
     lcd.drawText(14,-1, "F3F",FONT_MAXI)  
     lcd.drawText(6,28, "Tool",FONT_MAXI)  
     
-	if (globalVar.errorStatus > 0) then
+    if (globalVar.errorStatus > 0) then
       -- on error show message on splash screen
       lcd.drawText(80,5, errorTable [globalVar.errorStatus][1],FONT_MINI)  
       lcd.drawText(80,18, errorTable [globalVar.errorStatus][2],FONT_MINI)  
       lcd.drawText(80,31, errorTable [globalVar.errorStatus][3],FONT_MINI)  
 	
-	else  
+    else  
 
       -- F3F-mode
       if ( slope.mode == 1 ) then
@@ -820,8 +820,8 @@ function display:printFlightInfo (width, height)
            lcd.drawText(85,25,"  Speed  ",FONT_BOLD)
         elseif (basicCfg.f3bMode == 2) then
            lcd.drawText(75,25,"  Distance  ",FONT_BOLD)
-	    end
-      end		
+      end
+    end		
 	end
 	 	
   -- show error in large letters when occurs after start
@@ -878,7 +878,7 @@ local function init()
     
   system.registerForm(1, MENU_APPS, appName .. " - Configuration",
       function ( formId ) basicCfg:initForm ( formId ) end, nil, nil,
-	    function () basicCfg:closeForm () end )
+      function () basicCfg:closeForm () end )
 	  
   system.registerForm(2,MENU_APPS, appName .. " - Course Setup",
       function ( formId ) slopeManager:initSlopeForm ( formId ) end,
@@ -914,13 +914,13 @@ local function loop()
   if ( f3fTool_extCourseChange ) then
      slope:init ()   -- read new course data from file   
      f3fRun:init ()  
-	 f3fTool_extCourseChange = false
+     f3fTool_extCourseChange = false
   end
 
   -- need an adjustment of home position ?
   local shift = transmitter:observeCenterShift ()
   if ( shift ~= globalVar.direction.UNDEF ) then
-	  slope:moveCenter ( shift )
+    slope:moveCenter ( shift )
   end
     
   -- observe multifunction button
@@ -928,21 +928,21 @@ local function loop()
   local cmd = transmitter:observeSwitch ()
   if ( cmd == 1 ) then
     system.playBeep (0, 1200, 200)  
-	  f3fRun:launch ()
+    f3fRun:launch ()
 	
   -- double click: toggle A-Base (F3F)  or toggle Speeed/Distance  (F3B)
   elseif ( cmd == 2 ) then
     system.playBeep (0, 1200, 200)     
     if (slope.mode == 1) then
        slope:toggleABase ()
-	elseif (slope.mode == 2) then
-	   basicCfg:toggleF3bMode()
-	end
+    elseif (slope.mode == 2) then
+       basicCfg:toggleF3bMode()
+    end
 	
   -- long click: define new home position	
   elseif ( cmd == 3 ) then
     system.playBeep (0, 1200, 200)  
-	slope:defineNewCenter ()
+    slope:defineNewCenter ()
   end
 	
   -----------------------------------------------------------------------------  
@@ -973,17 +973,17 @@ local function loop()
   -- fly-out
   if ( f3fRun:checkFlyOut ( f3fRun.f3fRunData ) ) then    -- 5: status f3fRun.F3F_RUN
 
-	 -- this event is not valid for launch phase and timeout status -> use launch phase fly-out
+    -- this event is not valid for launch phase and timeout status -> use launch phase fly-out
 --     if ( not f3fRun:isStatus ( f3fRun.status.STARTPHASE ) and not f3fRun:isStatus ( f3fRun.status.TIMEOUT )) then 
      if ( f3fRun.curStatus ~= 3 and f3fRun.curStatus ~= 4 ) then 
         if ( f3fRun.curDir == f3fRun.nextTurnDir ) then
            f3fRun:distanceDone()
-		end
-	 end
+        end
+     end
 	 
   -- fly-in	  
   else
-    f3fRun:checkFlyIn ( f3fRun.f3fRunData )               -- 5: status f3fRun.F3F_RUN
+     f3fRun:checkFlyIn ( f3fRun.f3fRunData )               -- 5: status f3fRun.F3F_RUN
   end
 
 -----------------------------------------------------------------------------  
@@ -991,38 +991,38 @@ local function loop()
 
   -- fly-out
   if ( f3fRun:checkFlyOut ( f3fRun.launchPhaseData ) and
-       ( f3fRun.curDir == slope.aBase ) ) then                 -- only valid on A-BAse
+     ( f3fRun.curDir == slope.aBase ) ) then                 -- only valid on A-BAse
   
      -- event only valid for launch Phase and timeout 
 --     if ( f3fRun:isStatus (f3fRun.status.STARTPHASE) or f3fRun:isStatus (f3fRun.status.TIMEOUT)) then
      if ( f3fRun.curStatus == 3 or f3fRun.curStatus == 4) then
         system.playBeep  (0, 700, 300)  -- fly-out beep
-	 end
+     end
   end
 
   -- fly-in
   if ( f3fRun:checkFlyIn ( f3fRun.launchPhaseData ) and
-       ( f3fRun.curDir == slope.aBase ) ) then                 -- only valid on A-BAse
+     ( f3fRun.curDir == slope.aBase ) ) then                 -- only valid on A-BAse
 	   
 --	 if ( f3fRun:isStatus (f3fRun.status.STARTPHASE) or f3fRun:isStatus (f3fRun.status.TIMEOUT) ) then
-	 if ( f3fRun.curStatus == 3 or f3fRun.curStatus == 4 ) then
+     if ( f3fRun.curStatus == 3 or f3fRun.curStatus == 4 ) then
        system.playBeep  (0, 700, 300)  -- fly-in beep
-	   f3fRun:setNextTurnDir ()        -- next expected turn side
-	 end  
+       f3fRun:setNextTurnDir ()        -- next expected turn side
+     end  
 
      -- in launch phase, the f3f run starts here
 --	 if ( f3fRun:isStatus (f3fRun.status.STARTPHASE) ) then
-	 if ( f3fRun.curStatus == 3 ) then
-	    f3fRun:startRun ( false )
+     if ( f3fRun.curStatus == 3 ) then
+       f3fRun:startRun ( false )
 	 
-     -- if already a timeout occcurred, the time is running, just update status
+       -- if already a timeout occcurred, the time is running, just update status
 --	 elseif ( f3fRun:isStatus (f3fRun.status.TIMEOUT) ) then
-	 elseif ( f3fRun.curStatus == 4 ) then
+     elseif ( f3fRun.curStatus == 4 ) then
 --	    f3fRun.curStatus = f3fRun.status.F3F_RUN
-	    f3fRun.curStatus = 5
-		-- Timer for speed measurement
+        f3fRun.curStatus = 5
+        -- Timer for speed measurement
         f3fRun.timerStartSpeed = system.getTimeCounter()
-	 end
+	   end
   end
 
 -----------------------------------------------------------------------------  
@@ -1039,8 +1039,8 @@ local function loop()
      if (system.getTimeCounter() - f3fRun.timerStartSpeed >= 1500 ) then
         system.playFile(globalVar.resource.audioSpeed, AUDIO_QUEUE)  
         system.playNumber ( f3fRun.curSpeed , 0)
-		f3fRun.timerStartSpeed = -1
-	 end
+        f3fRun.timerStartSpeed = -1
+     end
   end
   	
 end

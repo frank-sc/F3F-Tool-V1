@@ -34,8 +34,8 @@ function storeSens:isIn (element, list)
   
   for i, elem in ipairs ( list ) do
      if elem == element then
-	    return true
-	 end
+       return true
+     end
   end
   return false
 end
@@ -56,33 +56,33 @@ function storeSens:storeSensorData ( dir, filename )
   local gpsIds = {}
   for index,sensor in ipairs(sysSensors) do 
 
-    local id = sensor.id
-    if ( sensor.type == 9 ) then             -- type '9' = GPS-coordinates
+     local id = sensor.id
+     if ( sensor.type == 9 ) then             -- type '9' = GPS-coordinates
        if not self:isIn ( id, gpsIds ) then
           gpsIds [ #gpsIds+1 ] = id
-	    end	 
-	  end
+       end	 
+    end
   end
 
   -- build new table with reduced entries and reduced data per entry
   local newSens = {}
   for index,sensor in ipairs(sysSensors) do
 
-     -- store only GPS-relevant telemetry entries 
-     if self:isIn ( sensor.id, gpsIds ) then  
-       local entry = { label=sensor.label, param = sensor.param, unit = sensor.unit }
+  -- store only GPS-relevant telemetry entries 
+  if self:isIn ( sensor.id, gpsIds ) then  
+     local entry = { label=sensor.label, param = sensor.param, unit = sensor.unit }
 	 
-	   -- important: explicitly convert the id to decimal, otherwise it is written as float by the
-	   --            json encoder and corrupted by loss of precision !
-	   entry.id = string.format ("%d", sensor.id )
+     -- important: explicitly convert the id to decimal, otherwise it is written as float by the
+     --            json encoder and corrupted by loss of precision !
+     entry.id = string.format ("%d", sensor.id )
 	 
-       -- add to new list 
-       newSens [ #newSens+1 ] = entry
-	 end  
+     -- add to new list 
+     newSens [ #newSens+1 ] = entry
+  end  
 	 
-	 sysSensors [ index ] = nil
+  sysSensors [ index ] = nil
      collectgarbage("collect") 
-  end
+ end
 
   -- save list for later use in sensor configuration
   

@@ -131,7 +131,7 @@ function slopeMgrForm:initSlopeForm (formID)
      self:setF3FSlopeSetup ()
 	 
   elseif ( formID == 2) then	 
-	 self:setF3BCourseSetup ()
+     self:setF3BCourseSetup ()
   end	 
 
   -- show a cancel button, until all points are scanned
@@ -149,11 +149,11 @@ function slopeMgrForm:scanGpsPoint ( checkBox, successMsg )
   local gpsPoint
   gpsPoint = self.gpsSens:getCurPosition ()  
 	
-   if (self.globalVar.errorStatus >0) then
+  if (self.globalVar.errorStatus >0) then
      self.action = self.errorTable [self.globalVar.errorStatus][1].." "
-	                ..self.errorTable [self.globalVar.errorStatus][2].." "
-				          ..self.errorTable [self.globalVar.errorStatus][3]
-   end
+                 ..self.errorTable [self.globalVar.errorStatus][2].." "
+                 ..self.errorTable [self.globalVar.errorStatus][3]
+  end
 
   if (  gpsPoint ) then                                        
      -- set status information   
@@ -184,7 +184,7 @@ function slopeMgrForm:handleF3FSlopeKeys(key)
      if not ( self.gpsNewHome or self.gpsBearLeft or self.gpsBearRight ) then
        self.mode = 2
        form.reinit (2)
-	 end
+     end
    end
    
    -- disable F3B mode and hide course name if scan is started
@@ -220,7 +220,7 @@ function slopeMgrForm:handleF3BCourseKeys(key)
      if not ( self.gpsNewHome or self.gpsBearLeft or self.gpsBearRight ) then
        self.mode = 1
        form.reinit (1)
-	 end
+     end
    end
    
    -- disable F3F mode and hide course name if scan is started
@@ -234,8 +234,8 @@ function slopeMgrForm:handleF3BCourseKeys(key)
 
       local bearing = gps.getBearing ( self.gpsBearLeft, self.gpsBearRight )
 	  
-	  -- calc home position, half distance away from start
-	  self.gpsNewHome = gps.getDestination ( self.gpsBearLeft, self.f3bDist / 2, bearing )
+      -- calc home position, half distance away from start
+      self.gpsNewHome = gps.getDestination ( self.gpsBearLeft, self.f3bDist / 2, bearing )
       self.action = string.format("F3B-course (%.0f degrees)", bearing )
 
       form.setButton(5, "Ok", ENABLED)
@@ -263,20 +263,20 @@ function slopeMgrForm:slopeScanKeyPressed(key)
 
        self.slope.mode = self.mode
        -- F3B: A-Base always left, left Base is defined as start point
-	   if (self.mode == 2) then
-	      self.slope.aBase = self.globalVar.direction.LEFT
-	   end
+       if (self.mode == 2) then
+         self.slope.aBase = self.globalVar.direction.LEFT
+       end
 
        -- new scan has no name yet
        self.slope.name = nil
 
        -- save it
-	   self.slope:persist ()
+       self.slope:persist ()
        -- ok - beep
        system.playBeep (0, 700, 300)  
 	
      else
-	   -- cancel - beep
+       -- cancel - beep
        system.playBeep (2, 1000, 200)
      end
 
@@ -286,43 +286,44 @@ end
 
 --------------------------------------------------------------------------------------------
 -- calculate wind direction
-  function slopeMgrForm:getWindDir ( bearing )
+function slopeMgrForm:getWindDir ( bearing )
 
-	local windDir = -1
-    local windDirDesc = "undefined"
+  local windDir = -1
+  local windDirDesc = "undefined"
 	
-    local angle, low, high
+  local angle, low, high
 	  
-	  -- read wind direction descriptions from file
-	  local filespec = self.dataDir .. "/windDir-" ..self.globalVar.lng.. ".jsn"	  
-	  local desc
-	  local file = io.readall( filespec )
-      if( file ) then
-         desc = json.decode(file)
-	  else
-         self.handleErr ("can not open file: '" ..filespec .."'")	  
-	  end
+ -- read wind direction descriptions from file
+ local filespec = self.dataDir .. "/windDir-" ..self.globalVar.lng.. ".jsn"	  
+ local desc
+ local file = io.readall( filespec )
 
-	-- get wind direction from slope bearing
-    if bearing < 90 then windDir = bearing + 270 else windDir = bearing - 90 end
-	
-    for i = 0, 15, 1 do
-      angle = i * 22.5
-
-      -- calculate range for wind direction
-      low = angle - 11.25
-      if low < 0 then low = low+360 end
-      local high = angle + 11.25
-      if high > 360 then high = high -360 end
-
-      -- inside ?
-      if ( windDir > low and windDir < high) then
-	    if (desc) then windDirDesc = desc [i+1] end
-	    break
-      end
-    end
-    return windDirDesc, windDir	  -- maybe: ( South, 185 )	
+  if( file ) then
+     desc = json.decode(file)
+  else
+     self.handleErr ("can not open file: '" ..filespec .."'")	  
   end
+
+  -- get wind direction from slope bearing
+  if bearing < 90 then windDir = bearing + 270 else windDir = bearing - 90 end
+	
+  for i = 0, 15, 1 do
+     angle = i * 22.5
+
+     -- calculate range for wind direction
+     low = angle - 11.25
+     if low < 0 then low = low+360 end
+     local high = angle + 11.25
+     if high > 360 then high = high -360 end
+
+     -- inside ?
+     if ( windDir > low and windDir < high) then
+        if (desc) then windDirDesc = desc [i+1] end
+        break
+     end
+  end
+  return windDirDesc, windDir	  -- maybe: ( South, 185 )	
+end
 
 
 --------------------------------------------------------------------------------------------
