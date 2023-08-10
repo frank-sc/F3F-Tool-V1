@@ -11,6 +11,9 @@ For installation of the current development version (HEAD) please refer to the [
 ## Status
 The tool in Version 1.4 is working quite well on the slope for F3F. For F3B-tasks there are some issues, especially with the very hight speed reached in the speed-task and with slightly inaccurate determination of the course bearing. See more detailed description in [**issues**](https://github.com/frank-sc/F3F-Tool-V1/issues).
 
+## News in V 1.41
+- none up to now, just prepared
+
 ## Development notices
 The main program file 'f3f_\<version\> and the working directory 'f3fTool-\<version\> are always renamed for a new upcoming version. This is to make sure that everything fits together and to allow several versions to run independently on one transmitter.
 
@@ -22,6 +25,7 @@ If you like the tool you can support my work on the the project by making a dona
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.PayPal.Me/f3frank)<br>
 
 ### thanks to
+- all donaters, who appreciate my work and help me getting new hardware for testing
 - Axel Barnitzke for giving me an idea how to work kind of object-oriented in LUA
 - Dave McQueeney for sharing his great Sensor Emulator for Jeti Studio, which allowed me to do a lot of testing on the PC,
 and also for bringing up the idea of unloading and reloading parts of code to meet the memory limitations
