@@ -34,7 +34,7 @@ local slopeMgrForm = {
   gpsSens = nil,
   errorTable = nil,
   f3bDist = nil,
-  handleErr = nil
+  handleErr = nil,
 
   -- internal stuff
   displayName = "",
@@ -44,10 +44,10 @@ local slopeMgrForm = {
   checkBoxBearingR = nil,
   
   gpsNewHome = nil,          -- new Center point
-  gpsBearLeft = nil,	       -- left bearing point
+  gpsBearLeft = nil,         -- left bearing point
   gpsBearRight = nil,        -- right bearing point
   
-  mode = nil,                -- 1: F3F  /  2: F3B
+  mode = nil                 -- 1: F3F  /  2: F3B
 }
 
 --------------------------------------------------------------------------------------------
