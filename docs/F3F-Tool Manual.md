@@ -24,9 +24,10 @@ To use this app a GPS Sensor must be placed in the model and connected to Jeti t
 ## 1.3. Requirements
 - Newest generation GPS-Sensor must be placed in the glider, needed telemetry values are: **latitude, longitude, speed**
 - If the sensor allows, not needed telemetry values should be disabled to speed up the telemetry transfer to transmitter. Also the usage of telemetry values from other sensors or from the receiver should be reduced.
+- Please use the newest Firmware for your Jeti-transmitter. This tool was developed and tested with Firmware 5.06 LUA, older Versions may cause problems.
 
 Special requirements for 'Generation 1' - transmitters with monochrome display:  
-- a LUA-enabled firmware must be installed on the transmitter (check: **'System / Info / Version'** – must end with 'LUA')
+- the newest LUA-enabled firmware must be installed on the transmitter (check: **'System / Info / Version'** – must end with 'LUA')
 - **Safety Issue:  
 For the model you use with 'f3fTool' no other LUA Application must be installed to consider the given memory limitations!**
 ##  1.4. F3B Support
