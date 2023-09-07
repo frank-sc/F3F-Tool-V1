@@ -4,7 +4,8 @@ This lua-app for Jeti transmitters is made for gps-based training of RC glider s
 All program releases in this 'V1'-repository are made to be compatible with generation 1 Jeti transmitters (with monochrome display). Please consider the requirements for those transmitters mentioned in the [**F3F-Tool manual**](docs/F3F-Tool%20Manual.md), so only use the binary form of the program (.lc) and do not use other lua-apps at the same time.
 
 ## Program Installation
-For installation of a stable release please download the zip-file and the corresponding manual of the newest release from the [**releases-page**](https://github.com/frank-sc/F3F-Tool-V1/releases), download of the 'source code' packages is not necessary. Copy all files and directories into your 'apps' directory on the transmitter, as described in the manual. Then please follow the further steps in the manual.
+For installation of a stable release please download the zip-file and the corresponding manual of the newest release from the [**releases-page**](https://github.com/frank-sc/F3F-Tool-V1/releases), download of the 'source code' packages is not necessary. Copy all files and directories into your 'apps' directory on the transmitter, as described in the manual. Then please follow the further steps in the manual.<br>
+**Important: Please use newest Jeti Firmware (currently 5.06 LUA). Older Firmware Versions may cause problems!**
 
 For installation of the current development version (HEAD) please refer to the [**wiki**](https://github.com/frank-sc/F3F-Tool-V1/wiki)
 
