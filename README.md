@@ -13,7 +13,7 @@ For installation of the current development version (HEAD) please refer to the [
 The tool in Version 1.4 is working quite well on the slope for F3F. For F3B-tasks there are some issues, especially with the very hight speed reached in the speed-task and with slightly inaccurate determination of the course bearing. See more detailed description in [**issues**](https://github.com/frank-sc/F3F-Tool-V1/issues).
 
 ## News in V 1.41
-- none up to now, just prepared
+- added french language configuration
 
 ## Development notices
 The main program file 'f3f_\<version\> and the working directory 'f3fTool-\<version\> are always renamed for a new upcoming version. This is to make sure that everything fits together and to allow several versions to run independently on one transmitter.

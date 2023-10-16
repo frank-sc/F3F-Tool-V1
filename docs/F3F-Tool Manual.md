@@ -37,7 +37,7 @@ To enable this tool also for F3B Training, some features are provided:
 - time measurement after 4 legs in case of a F3B-course used for speed task
 - no time measurement, only leg count for distance task
 ## 1.5. Language support
-Currently all menus and display texts are only available in english. All speech announcements are given in english or german,
+Currently all menus and display texts are only available in english. All speech announcements are given in english, french or german,
 depending on the system language of the transmitter. For other languages supported by Jeti the audio configuration file must be created similar to 'audio-en.jsn'.
 
 <a name="programInstallation"></a>
