@@ -317,7 +317,13 @@ function slopeMgrForm:getWindDir ( bearing )
      if high > 360 then high = high -360 end
 
      -- inside ?
-     if ( windDir > low and windDir < high) then
+     local inside = false
+	  if ( i==0 and ( windDir > low or windDir < high ) ) then
+	    inside = true	 
+     elseif ( windDir > low and windDir < high) then
+       inside = true  
+     end	
+	  if ( inside ) then
         if (desc) then windDirDesc = desc [i+1] end
         break
      end

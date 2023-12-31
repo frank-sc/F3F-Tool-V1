@@ -14,6 +14,7 @@ The tool in Version 1.4 is working quite well on the slope for F3F. For F3B-task
 
 ## News in V 1.41
 - added french language configuration
+- bugfix: for north slope (389 - 11 deg.) name was not found and it was called 'undefined'
 
 ## Development notices
 The main program file 'f3f_\<version\> and the working directory 'f3fTool-\<version\> are always renamed for a new upcoming version. This is to make sure that everything fits together and to allow several versions to run independently on one transmitter.
