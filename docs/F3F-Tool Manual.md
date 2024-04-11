@@ -129,7 +129,7 @@ To setup your slope for F3F:<br>
 _Picture: Slope setup before and after scanning the points.<br> '270 degrees' means, the slope orientation is exactly west._
 
 ##  3.3. F3B Course Setup
-Setup for a F3B Course is slightly different. To avoid running into the middle of the course the setup can be done from A-Base. Only the starting position (A-Base) and a secont point in direction of the course are scanned. Precision increases again with the distance of the two points.
+Setup for a F3B Course is slightly different. To avoid running into the middle of the course the setup can be done from A-Base. Only the starting position (A-Base) and a second point in direction of the course are scanned. Precision increases again with the distance of the two points.
 
 To setup your F3B-Course:<br>
 - select **'Menu / Applications / F3F Tool – Course Setup'**
