@@ -12,7 +12,7 @@ For installation of the current development version (HEAD) please refer to the [
 ## Status
 The tool in Version 1.4 is working quite well on the slope for F3F. For F3B-tasks there are some issues, especially with the very hight speed reached in the speed-task and with slightly inaccurate determination of the course bearing. See more detailed description in [**issues**](https://github.com/frank-sc/F3F-Tool-V1/issues).
 
-## News in V 1.41
+## Upcoming News in V 1.41 (not yet released)
 - added french language configuration
 - bugfix: for north slope (389 - 11 deg.) name was not found and it was called 'undefined'
 
